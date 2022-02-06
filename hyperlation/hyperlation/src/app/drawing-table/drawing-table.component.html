@@ -1,0 +1,6 @@
+<div class="drawing-table">
+    <app-drawing *ngFor="let dr of drawings" [drawing]="dr"  [size]="size" 
+    (deleteEvent)="deleteDrawing($event)" (updateDrawingEvent)="updateDrawing($event)"
+    (leftEvent)="leftEvent($event)" (rightEvent)="rightEvent($event)">
+    </app-drawing>
+</div>

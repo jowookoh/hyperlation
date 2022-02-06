@@ -1,0 +1,13 @@
+<!-- <label style="color: white;">{{drawing?.id}}-{{drawing?.progress}}</label> -->
+<section >
+    <canvas class="whiteboard" #canvas></canvas>
+</section>
+<div style="margin-left: 5px; display:flex; align-items: center;">
+    <button class="add-btn">{{drawing?.order}}</button> 
+    <button class="p-btn" (click)="clear()">clear</button>
+    <button class="p-btn" (click)="delete()">delete</button>
+    <button class="p-btn" (click)="left()">&#9194;</button>
+    <button class="p-btn" (click)="right()">&#9193;</button>
+
+
+</div>

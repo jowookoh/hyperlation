@@ -1,22 +1,32 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { WhiteboardComponent } from './whiteboard/whiteboard.component';
-import { NgWhiteboardModule } from 'ng-whiteboard';
+import { WaveformComponent } from './waveform/waveform.component';
+import { NgWaveformModule } from 'ng-waveform';
+import { DrawingComponent } from './drawing/drawing.component';
+import { DrawingTableComponent } from './drawing-table/drawing-table.component';
+import { BackendService } from './shared/backend.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    WhiteboardComponent
+    WaveformComponent,
+    DrawingComponent,
+    DrawingTableComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgWhiteboardModule
+    NgWaveformModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [BackendService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,145 @@
+
+<div>
+  <section *ngIf="this.isAudioQueried" style="display: flex; align-items:center;">
+    <app-drawing-table [size]="brushSize" style="width:80%;"></app-drawing-table>
+    <!-- <button class="hidden">hidden</button> -->
+    <canvas id="playerCanvas" width="256" height="256" class="player"></canvas>
+  </section>
+</div>
+
+  
+
+<div style="display: flex;">
+  
+  <section  class="section" style="width: 75%;">
+        
+    <input id="file-upload" type="file" (change)="handleFileInput($event.target)" />
+    <button class="add-new" *ngIf="this.currentTime" (click)="addKeyframe()">&#10010;</button>
+
+    <button *ngIf="this.isAudioQueried" [style.backgroundColor] = "brushSize==15 ? '#466ab8' : 'black'" class="brush-btn" (click)="setSize(15)">3</button>
+    <button *ngIf="this.isAudioQueried" [style.backgroundColor] = "brushSize==20 ? '#466ab8' : 'black'" class="brush-btn" (click)="setSize(20)">4</button>
+    <button *ngIf="this.isAudioQueried" [style.backgroundColor] = "brushSize==30 ? '#466ab8' : 'black'" class="brush-btn" (click)="setSize(30)">6</button>
+    <button *ngIf="this.isAudioQueried" [style.backgroundColor] = "brushSize==50 ? '#466ab8' : 'black'" class="brush-btn" (click)="setSize(50)">10</button>
+    
+    <span *ngIf="this.isAudioQueried" class="mfcc-span">
+      <label class="mfcc-label">Frame rate:</label>
+      <select class="mfcc-input" [(ngModel)]="fr">
+        <option *ngFor="let f of frs" [ngValue]="f">{{f}}</option>
+      </select>
+      <label class="mfcc-label">Sample rate:</label>
+      <select class="mfcc-input" [(ngModel)]="sr">
+        <option *ngFor="let s of srs" [ngValue]="s">{{s}}</option>
+      </select>
+      <!-- <input  class="mfcc-input"  type="number" min="2400" max="22050" [(ngModel)]="sr"> -->
+      <label class="mfcc-label">Number of coefficients:</label>
+      <select class="mfcc-input" [(ngModel)]="n">
+        <option *ngFor="let n of ns" [ngValue]="n">{{n}}</option>
+      </select>
+      <!-- <input  class="mfcc-input"  type="number" min="2" max="30" [(ngModel)]="n"> -->
+  
+      <button class="btn" (click)="getMFCC()">MFCC</button>
+    </span>
+ 
+    
+    <div class="container" *ngIf="this.isAudioQueried">
+      <div class="markings">
+        <div *ngFor="let x of drawingTable?.drawings" style="position:absolute; top: 0;" [ngStyle]="{left: x.progress+'%'}">
+          <label style="color: #c6f035;">{{x.order}}  </label> 
+          <div class="marker" [ngStyle]="{height: mfccImage ? '254px' : '69px'}"></div>     
+        </div>
+      </div>
+    </div>
+    <div class="container" *ngIf="this.isAudioQueried">
+      <img [src]="mfccImage" width="1100" height="200"
+      alt="Place image title"
+      *ngIf="mfccImage && !isImageLoading else noImageFound">
+      <ng-template #noImageFound >
+            <img *ngIf="isImageLoading" src="https://via.placeholder.com/1100x60?text=Please+wait" alt="Fallbackimage">            
+      </ng-template>
+    </div>
+    <div class="container">
+      <div class="loader" *ngIf="isAudioQueried && !isLoaded"><p>Loading...</p></div>
+      <ng-waveform #waveform *ngIf="isAudioQueried"
+        [src]="src"
+        [height]="50"
+        [useRegion]="useRegion"
+        regionBackgroundColor="rgba(0,0,0,0)"
+        regionStartStickColor="black"
+        regionEndStickColor="black"
+        regionTextColor="#5e7d66"
+        [withRegionLabels]="true"
+        waveColor="#466ab8"
+        (trackLoaded)="onTrackLoaded($event)"
+        (rendered)="onTrackRendered($event)"
+        (durationChange)="onDurationChange($event)"
+        (timeUpdate)="onTimeUpdate($event)"
+        (paused)="onPaused()"
+        (regionChange)="onRegionChange($event)"
+      >
+      </ng-waveform>
+    </div>
+
+    <div class="container" >
+      <div class="controls" *ngIf="isLoaded">
+        <!-- <button (click)="onGoToStartButtonClick()"  class="icon-button">
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="#000000" d="M14,19H18V5H14M6,19H10V5H6V19Z" />
+          </svg>
+        </button> -->
+        <button (click)="onPlayButtonClick()" *ngIf="!play" class="icon-button">
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="#000000" d="M8,5.14V19.14L19,12.14L8,5.14Z" />
+          </svg>
+        </button>
+        <button (click)="onPauseButtonClick()" *ngIf="play" class="icon-button">
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="#000000" d="M14,19H18V5H14M6,19H10V5H6V19Z" />
+          </svg>
+        </button>
+
+      </div>
+    </div>
+
+  </section>
+
+  <section class="right-section" *ngIf="this.isAudioQueried">
+
+    <label class="mfcc-label">Number of coefficients:</label>
+      <!-- <select class="mfcc-input" [(ngModel)]="n">
+        <option *ngFor="let no of ns" [ngValue]="no">{{no}}</option>
+      </select> -->
+  </section>
+
+  <!-- <section class="section" *ngIf="isLoaded">
+    <div class="container">
+      <div class="telemetry">
+        <h3>Telemetry</h3>
+        <p><span class="label">Time to load track:</span><span class="value">{{trackLoadTime}}</span>ms</p>
+        <p><span class="label">Time to render wave:</span><span class="value">{{renderingTime}}</span>ms</p>
+        <p><span class="label">Duration:</span><span class="value">{{duration | number: '1.2-2'}}</span>s</p>
+        <p><span class="label">Current time:</span><span class="value">{{currentTime?.time | number: '1.2-2'}}</span>s</p>
+        <p><span class="label">Progress:</span><span class="value">{{currentTime?.progress | number: '1.2-2'}}</span>%</p>
+      </div>
+      <div class="region-controls">
+        <h3>Region control</h3>
+        <div class="form-row">
+          <label>
+            <input type="checkbox" [formControl]="isRegionCtrl">
+            Turn region off
+          </label>
+        </div>
+        <ng-container *ngIf="useRegion">
+          <label for="region-start">Start</label>
+          <input type="number" id="region-start" min="0" [max]="duration" [formControl]="regionStartCtrl">
+          <label for="region-end">End</label>
+          <input type="number" id="region-end" min="0" [max]="duration" [formControl]="regionEndCtrl">
+        </ng-container>
+      </div>
+    </div>
+  </section> -->
+  
+  
+</div>
+
+
+

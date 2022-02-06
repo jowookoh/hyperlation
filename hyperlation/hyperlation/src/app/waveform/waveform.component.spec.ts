@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WhiteboardComponent } from './whiteboard.component';
+import { WaveformComponent } from './waveform.component';
 
-describe('WhiteboardComponent', () => {
-  let component: WhiteboardComponent;
-  let fixture: ComponentFixture<WhiteboardComponent>;
+describe('WaveformComponent', () => {
+  let component: WaveformComponent;
+  let fixture: ComponentFixture<WaveformComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WhiteboardComponent ]
+      declarations: [ WaveformComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WhiteboardComponent);
+    fixture = TestBed.createComponent(WaveformComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

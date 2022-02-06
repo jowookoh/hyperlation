@@ -1,0 +1,167 @@
+$width: 1100px;
+h1, h2 {
+  text-align: center;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+h2 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  max-width: 80%;
+}
+.section {
+  margin-bottom: 2rem;
+  margin: 0px 30px;
+  .container {
+    max-width: $width;
+    min-width: $width;
+
+  }
+}
+
+.default-audio, .divider {
+  text-align: center;
+  margin: 1rem auto;
+  button {
+    background: #ff009e;
+    border: none;
+    outline: none;
+    color: #fff;
+    border-radius: 7px;
+    padding: 16px 12px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+}
+
+.src-form {
+  min-height: 47px;
+  .form-row {
+    display: flex;
+    input {
+      flex: 1 1 auto;
+      padding: 6px 10px;
+      box-sizing: border-box;
+      outline: none;
+    }
+  }
+  .error-row {
+    font-size: 13px;
+    color: red;
+  }
+}
+.waveform {
+  max-width: $width;
+  min-width: $width;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to right, #7240e9, #17f327);
+}
+.controls {
+  text-align: center;
+
+  .icon-button {
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+  }
+}
+
+.label {
+  min-width: 180px;
+  max-width: 180px;
+  font-weight: 600;
+  display: inline-block;
+}
+.value {
+  display: inline-block;
+  min-width: 100px;
+  text-align: right;
+  margin-right: 5px;
+}
+.region-controls {
+  .form-row {
+    margin-bottom: 1rem;
+  }
+  label {
+    margin-right: 5px;
+    font-weight: 600;
+  }
+  input {
+    margin-right: 20px;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    outline: none;
+  }
+}
+.markings{
+  background-color: rgb(75, 75, 75);
+  height: 20px;
+  position: relative;
+  margin-top: 5px;
+}
+.marker{
+  top: 20px;
+  position: absolute;
+  border-left: #94b22e 2px solid;
+  width: 1px;
+  z-index: 1;
+}
+
+
+.player{
+  height: 256px;
+  width: 256px;
+  margin-right: 30px;
+
+  background: white;
+  border: 5px solid #70848a;
+}
+
+.hidden{
+  opacity: 0;
+}
+
+.brush-btn{
+  background-color: black;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border: 1px solid transparent;
+  border-radius: 100%;
+  margin-right: 5px;
+  
+}
+
+.btn{
+  height: 30px;
+}
+
+.add-new{
+  background-color: #c6f035;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.mfcc-span{
+  margin-left: 30px;
+  color: white;
+}
+
+.mfcc-label{
+  margin-inline: 5px;
+}
+
+.mfcc-input{
+  height: 30px;
+  margin-right: 10px;
+}
+
+.right-section{
+  width: 25%;
+  height: 100%;
+  padding: 5px;
+  border: 5px solid #70848a;
+}
